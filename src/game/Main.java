@@ -8,8 +8,7 @@ import javax.swing.JPanel;
 import gamestates.*;
 
 public class Main {
-	
-	
+
 
 	public static void main(String[] args) {
 		
@@ -20,10 +19,9 @@ public class Main {
 		frame.setVisible(true);
 		
 		
-		GetData g = new GetData();
 		
-		Enemy a = new Enemy();
-		a.shortestPath(g.getMap(), new Location(4, 5));
+		//Enemy a = new Enemy();
+		//a.shortestPath(g.getMap(), new Location(4, 5));
 		
 		System.out.println(new File("").getAbsolutePath());
 		

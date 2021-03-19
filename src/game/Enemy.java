@@ -2,7 +2,7 @@ package game;
 
 import java.util.ArrayList;
 
-public class Enemy extends Character{
+public abstract class Enemy extends Character{
 	
 	String enemyName, enemyType;
 	

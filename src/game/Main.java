@@ -19,6 +19,12 @@ public class Main {
 		frame.add(new MenuState(frame));
 		frame.setVisible(true);
 		
+		
+		GetData g = new GetData();
+		
+		Enemy a = new Enemy();
+		a.shortestPath(g.getMap(), new Location(4, 5));
+		
 		System.out.println(new File("").getAbsolutePath());
 		
 	}

@@ -1,6 +1,11 @@
-package game;
+package characters;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
+
+import game.Location;
+import game.Map;
 
 public abstract class Enemy extends Character{
 	
@@ -20,8 +25,100 @@ public abstract class Enemy extends Character{
 		Location location;
 	}
 	
-	public void shortestPath(int[][] map, Location goal) {
-		this.location = new Location(3,3);
+	public Enemy(int enemyID, String enemyName, String enemyType, Location location) {
+		super(enemyID, enemyName, enemyType, location);
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void run(Location goal) {
+		ArrayList<moves> path = shortestPath(goal);
+		switch (path.get(0)) {
+			case LEFT:
+				goLeft();
+				
+				break;
+			case RIGHT:
+				goRight();
+				
+				break;
+			case UP:
+				goUp();
+				
+				break;
+			case DOWN:
+				goDown();
+				
+				break;
+		}
+		
+		
+	}
+	
+	public void drawPath(Graphics g, Location goal) {
+		ArrayList<moves> path = shortestPath(goal);
+		g.setColor(new Color(200, 12, 6));
+		int x = 0, y = 0;
+		
+		g.fillRect(Map.TILE_SIZE * (x + location.getX()), Map.TILE_SIZE * (y + location.getY()), Map.TILE_SIZE, Map.TILE_SIZE);
+		
+		for (int i = 0; i < path.size(); i++) {
+			switch (path.get(i)) {
+				case DOWN:
+					y++;
+					
+					break;
+				case LEFT:
+					x--;
+					
+					break;
+				case RIGHT:
+					x++;
+					
+					break;
+				case UP:
+					y--;
+					
+					break;
+			}
+			g.fillRect(Map.TILE_SIZE * (x + location.getX()), Map.TILE_SIZE * (y + location.getY()), Map.TILE_SIZE, Map.TILE_SIZE);
+		}
+		
+		
+	}
+	
+	public void goUp() {
+		if(location.getY()-1 >= 0 ) {
+			if(map[location.getY()-1][location.getX()] == 1) {
+				location.setY(location.getY()-1);
+			}
+		}
+	}
+	
+	public void goDown() {
+		if(location.getY() < map.length-1 ) {
+			if(map[location.getY()+1][location.getX()] == 1) {
+				location.setY(location.getY()+1);
+			}
+		}
+	}
+	
+	public void goLeft() {
+		if(location.getX()-1 >= 0 ) {
+			if(map[location.getY()][location.getX()-1] == 1) {
+				location.setX(location.getX()-1);
+			}
+		}
+	}
+	
+	public void goRight() {
+		if(location.getX() < map[0].length-1 ) {
+			if(map[location.getY()][location.getX()+1] == 1) {
+				location.setX(location.getX()+1);
+			}
+		}
+	}
+	
+	public ArrayList<moves> shortestPath(Location goal) {
 		Node[][] nodes = new Node[map.length][map[0].length];
 		for (int i = 0; i < nodes.length; i++) {
 			for (int j = 0; j < nodes[0].length; j++) {
@@ -31,10 +128,10 @@ public abstract class Enemy extends Character{
 				//System.out.println("isVisited: " + nodes[i][j].isVisited);
 			}
 		}
-		Node currentNode = nodes[3][3];
+		Node currentNode = nodes[location.getY()][location.getX()];
 		currentNode.distance = 0;
 		
-		System.out.println(currentNode.distance);
+		//System.out.println(currentNode.distance);
 		
 		//nodes[location.getY()][location.getX()].distance = 0;
 		
@@ -76,8 +173,9 @@ public abstract class Enemy extends Character{
 			}
 		}
 		
-		System.out.println(nodes[goal.getY()][goal.getX()].moveList.toString());
-		System.out.println(nodes[goal.getY()][goal.getX()].distance);
+		//System.out.println(nodes[goal.getY()][goal.getX()].moveList.toString());
+		//System.out.println(nodes[goal.getY()][goal.getX()].distance);
+		return nodes[goal.getY()][goal.getX()].moveList;
 		
 	}
 	

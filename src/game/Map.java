@@ -27,14 +27,17 @@ public class Map {
 				else if(map[i][j] == 1)
 					g.setColor(new Color(200, 200, 200));
 				g.fillRect(TILE_SIZE * j, TILE_SIZE * i, TILE_SIZE, TILE_SIZE);
-				g.setColor(new Color(0,0,0));
-				g.drawRect(TILE_SIZE * j, TILE_SIZE * i, TILE_SIZE, TILE_SIZE);
-				System.out.println(map[i][j]);
+				
 			}
-		}
-		
-		
+	}
 		
 	}
-	
+	public void drawGrid(Graphics g) {
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[0].length; j++) {
+				g.setColor(new Color(0,0,0));
+				g.drawRect(TILE_SIZE * j, TILE_SIZE * i, TILE_SIZE, TILE_SIZE);
+			}
+		}
+	}
 }

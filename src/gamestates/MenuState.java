@@ -49,10 +49,10 @@ public class MenuState extends State implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		frame.remove(this);
 		if (e.getSource() == button1) {
-			frame.add(new PlayState(frame));
+			frame.add(new PlayState(frame, "player1"));
 		} 
 		else if(e.getSource() == button2){
-			frame.add(new PlayState(frame));
+			frame.add(new PlayState(frame, "player2"));
 		}
 		
 		

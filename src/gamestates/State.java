@@ -3,7 +3,7 @@ package gamestates;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class State extends JPanel{
+public abstract class State extends JPanel{
 
 	JFrame frame;
 	

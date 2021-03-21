@@ -13,7 +13,7 @@ import game.Location;
 
 public abstract class Player extends Character{
 
-	protected enum moveStates{
+	protected enum MoveStates{
 		RIGHT,
 		LEFT,
 		UP,
@@ -24,17 +24,16 @@ public abstract class Player extends Character{
 	private int score;
 	
 	
-	
 	Action upAction, downAction, leftAction, rightAction;
 	JPanel panel;
 	
-	moveStates moveState;
+	MoveStates moveState;
 	
 	public Player(int playerID, String playerName, String playerType, int score, Location location, JPanel panel) {
 		super(playerID, playerName, playerType, location);
 		this.score = score;
 		this.panel = panel;
-		moveState = moveStates.IDLE;
+		moveState = MoveStates.IDLE;
 		
 		setKeyBindings();
 	}
@@ -66,10 +65,10 @@ public abstract class Player extends Character{
 	public boolean run() {
 		boolean isMoved = false;
 		move();
-		if(moveState != moveStates.IDLE)
+		if(moveState != MoveStates.IDLE)
 			isMoved = true;
 		
-		moveState = moveStates.IDLE;
+		moveState = MoveStates.IDLE;
 		
 		return isMoved;
 	}
@@ -132,7 +131,7 @@ public abstract class Player extends Character{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			moveState = moveStates.UP;
+			moveState = MoveStates.UP;
 			
 		}
 		
@@ -142,7 +141,7 @@ public abstract class Player extends Character{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			moveState = moveStates.LEFT;
+			moveState = MoveStates.LEFT;
 			
 		}
 		
@@ -152,7 +151,7 @@ public abstract class Player extends Character{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			moveState = moveStates.DOWN;
+			moveState = MoveStates.DOWN;
 			
 		}
 		
@@ -162,7 +161,7 @@ public abstract class Player extends Character{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			moveState = moveStates.RIGHT;
+			moveState = MoveStates.RIGHT;
 			System.out.println();
 			
 			

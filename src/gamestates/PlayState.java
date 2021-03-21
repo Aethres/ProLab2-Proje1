@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 
 import characters.Enemy;
 import characters.Enemy1;
+import characters.Enemy2;
 import characters.Player;
 import characters.Player1;
 import characters.Player2;
@@ -70,7 +71,12 @@ public class PlayState extends State{
 	    @Override
 	    public void run() {
 	    	while(true) {
-	    		//
+	    		try {
+					thread.sleep(15);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	    		isPlayerMoved = player.run();
 	    		
 	    		if(isPlayerMoved) {

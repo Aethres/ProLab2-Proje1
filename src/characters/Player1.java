@@ -2,7 +2,7 @@ package characters;
 
 import javax.swing.JPanel;
 
-import characters.Player.moveStates;
+import characters.Player.MoveStates;
 import game.Location;
 
 public class Player1 extends Player{
@@ -17,10 +17,10 @@ public class Player1 extends Player{
 		boolean isMoved = false;
 		move();
 		move();
-		if(moveState != moveStates.IDLE)
+		if(moveState != MoveStates.IDLE)
 			isMoved = true;
 		
-		moveState = moveStates.IDLE;
+		moveState = MoveStates.IDLE;
 		
 		return isMoved;
 	}

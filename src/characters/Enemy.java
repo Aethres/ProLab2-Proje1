@@ -11,7 +11,7 @@ public abstract class Enemy extends Character{
 	
 	String enemyName, enemyType;
 	
-	enum moves{
+	enum Moves{
 		LEFT,
 		RIGHT,
 		UP,
@@ -21,7 +21,7 @@ public abstract class Enemy extends Character{
 	class Node{
 		int distance = -1;
 		boolean isVisited = false;
-		ArrayList<moves> moveList = new ArrayList<>(0);
+		ArrayList<Moves> moveList = new ArrayList<>(0);
 		Location location;
 	}
 	
@@ -31,37 +31,47 @@ public abstract class Enemy extends Character{
 	}
 	
 	public void run(Location goal) {
-		ArrayList<moves> path = shortestPath(goal);
-		switch (path.get(0)) {
-			case LEFT:
-				goLeft();
-				
-				break;
-			case RIGHT:
-				goRight();
-				
-				break;
-			case UP:
-				goUp();
-				
-				break;
-			case DOWN:
-				goDown();
-				
-				break;
-		}
+		ArrayList<Moves> path = shortestPath(goal);
+		move(path.get(0));
 		
 		
 	}
 	
-	public void drawPath(Graphics g, Location goal) {
-		ArrayList<moves> path = shortestPath(goal);
-		g.setColor(new Color(200, 12, 6));
-		int x = 0, y = 0;
+	protected void move(Moves move) {
+		switch (move) {
+		case LEFT:
+			goLeft();
+			
+			break;
+		case RIGHT:
+			goRight();
+			
+			break;
+		case UP:
+			goUp();
+			
+			break;
+		case DOWN:
+			goDown();
+			
+			break;
+	}
 		
-		g.fillRect(Map.TILE_SIZE * (x + location.getX()), Map.TILE_SIZE * (y + location.getY()), Map.TILE_SIZE, Map.TILE_SIZE);
+	}
+	
+	public void drawPath(Graphics g, Location goal) {
+		ArrayList<Moves> path = shortestPath(goal);
+		
+		
+		int x = 0, y = 0, a = 0;
+		int alpha = 255 / (path.size() + 1);
+		
+		g.setColor(new Color(255, 0, 0, alpha * (++a) ));
+		
+		g.fillRect(Map.TILE_SIZE * (x + location.getX()) + 1, Map.TILE_SIZE * (y + location.getY()), Map.TILE_SIZE, Map.TILE_SIZE);
 		
 		for (int i = 0; i < path.size(); i++) {
+			g.setColor(new Color(255, 0, 0, alpha * (++a) ));
 			switch (path.get(i)) {
 				case DOWN:
 					y++;
@@ -80,7 +90,7 @@ public abstract class Enemy extends Character{
 					
 					break;
 			}
-			g.fillRect(Map.TILE_SIZE * (x + location.getX()), Map.TILE_SIZE * (y + location.getY()), Map.TILE_SIZE, Map.TILE_SIZE);
+			g.fillRect(Map.TILE_SIZE * (x + location.getX()) + 1, Map.TILE_SIZE * (y + location.getY()), Map.TILE_SIZE, Map.TILE_SIZE);
 		}
 		
 		
@@ -118,7 +128,7 @@ public abstract class Enemy extends Character{
 		}
 	}
 	
-	public ArrayList<moves> shortestPath(Location goal) {
+	public ArrayList<Moves> shortestPath(Location goal) {
 		Node[][] nodes = new Node[map.length][map[0].length];
 		for (int i = 0; i < nodes.length; i++) {
 			for (int j = 0; j < nodes[0].length; j++) {
@@ -138,18 +148,19 @@ public abstract class Enemy extends Character{
 		//int h = 0;
 		while(true) {
 			
-			ArrayList<Node> nearNodes = getNearNodes(map, currentNode, nodes);
+			ArrayList<Node> nearNodes = getNearNodes(map, currentNode, nodes, goal);
 			/*for (int i = 0; i < nearNodes.size(); i++) {
 				System.out.println("y: " + nearNodes.get(i).location.getY() + " x: " + nearNodes.get(i).location.getX());
 				//System.out.println("isVisited: " + nodes[i][j].isVisited);
 			}*/
 			for (int i = 0; i < nearNodes.size(); i++) {
-				if(currentNode.distance < nearNodes.get(i).distance) {
-					continue;
+				if(currentNode.distance < nearNodes.get(i).distance || nearNodes.get(i).distance == -1) {
+					nearNodes.get(i).distance = currentNode.distance + 1;
+					nearNodes.get(i).moveList.clear();
+					nearNodes.get(i).moveList.addAll(currentNode.moveList);
+					nearNodes.get(i).moveList.add(releativePosition(currentNode, nearNodes.get(i)));
 				}
-				nearNodes.get(i).distance = currentNode.distance + 1;
-				nearNodes.get(i).moveList.addAll(currentNode.moveList);
-				nearNodes.get(i).moveList.add(releativePosition(currentNode, nearNodes.get(i)));
+				
 				
 				//System.out.println(h++ +": " + nearNodes.get(i).moveList.toString());
 				//System.out.println(h +": " + nearNodes.get(i).distance);
@@ -173,22 +184,22 @@ public abstract class Enemy extends Character{
 			}
 		}
 		
-		//System.out.println(nodes[goal.getY()][goal.getX()].moveList.toString());
-		//System.out.println(nodes[goal.getY()][goal.getX()].distance);
+		System.out.println(nodes[goal.getY()][goal.getX()].moveList.toString());
+		System.out.println(nodes[goal.getY()][goal.getX()].distance);
 		return nodes[goal.getY()][goal.getX()].moveList;
 		
 	}
 	
-	public moves releativePosition(Node node1, Node node2) {
+	public Moves releativePosition(Node node1, Node node2) {
 		if(node1.location.getY() < node2.location.getY())
-			return moves.DOWN;
+			return Moves.DOWN;
 		else if(node1.location.getY() > node2.location.getY())
-			return moves.UP;
+			return Moves.UP;
 		else if(node1.location.getX() < node2.location.getX())
-			return moves.RIGHT;
+			return Moves.RIGHT;
 		else if(node1.location.getX() > node2.location.getX())
-			return moves.LEFT;
-		return moves.DOWN;
+			return Moves.LEFT;
+		return Moves.DOWN;
 	}
 	
 	/*
@@ -230,7 +241,7 @@ public abstract class Enemy extends Character{
 	}
 	*/
 	
-	public ArrayList<Node> getNearNodes(int[][] map, Node node, Node[][] nodes) {
+	public ArrayList<Node> getNearNodes(int[][] map, Node node, Node[][] nodes, Location goal) {
 		ArrayList<Node> nearNodes = new ArrayList<>(0);
 		int x = node.location.getX();
 		int y = node.location.getY();

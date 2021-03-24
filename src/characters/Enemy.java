@@ -96,6 +96,15 @@ public abstract class Enemy extends Character{
 		
 	}
 	
+	public boolean checkPlayer(Location current, Location goal) {
+		if(current.getX() == goal.getX() && current.getY() == goal.getY())
+			return true;
+		
+		return false;
+		
+	}
+	
+	
 	public void goUp() {
 		if(location.getY()-1 >= 0 ) {
 			if(map[location.getY()-1][location.getX()] == 1) {
@@ -184,8 +193,8 @@ public abstract class Enemy extends Character{
 			}
 		}
 		
-		System.out.println(nodes[goal.getY()][goal.getX()].moveList.toString());
-		System.out.println(nodes[goal.getY()][goal.getX()].distance);
+		//System.out.println(nodes[goal.getY()][goal.getX()].moveList.toString());
+		//System.out.println(nodes[goal.getY()][goal.getX()].distance);
 		return nodes[goal.getY()][goal.getX()].moveList;
 		
 	}

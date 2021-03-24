@@ -43,7 +43,7 @@ public class PlayState extends State{
 		else if(playerType == "player2")
 			this.player = new Player2(1, "ali", "player2", 20, new Location(6,5), this);
 		
-		enemy = new Enemy1(1, "aaaaaa", "aaa", new Location(3,0));
+		enemy = new Enemy2(1, "aaaaaa", "aaa", new Location(3,0));
 		
 		
 		thread.start();

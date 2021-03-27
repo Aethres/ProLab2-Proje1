@@ -1,6 +1,7 @@
 package gamestates;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,7 +22,7 @@ public class PlayState extends State{
 	GetData data;
 	Player player;
 	String playerType;
-	Enemy enemy;
+	ArrayList<Enemy> enemies;
 	boolean isPlayerMoved;
 	
 	
@@ -43,9 +44,9 @@ public class PlayState extends State{
 		else if(playerType == "player2")
 			this.player = new Player2(1, "ali", "player2", 20, new Location(6,5), this);
 		
-		enemy = new Enemy2(1, "aaaaaa", "aaa", new Location(3,0));
 		
-		
+		enemies = new ArrayList<Enemy>(0);
+		generateEnemies();
 		thread.start();
 		
 		
@@ -53,13 +54,30 @@ public class PlayState extends State{
 		
 	}
 	
+	public void generateEnemies() {
+		
+		if (data.getEnemy1().equals("Gargamel")) {
+			System.out.println("sd");
+			enemies.add(new Enemy2(1, "Gargamel", "Gargamel", data.getEnemy1Location()));
+		}
+		else if(data.getEnemy1().equals("Azman")) {
+			enemies.add(new Enemy1(1, "Azman", "Azman", data.getEnemy1Location()));
+		}
+		if (data.getEnemy2().equals("Gargamel")) {
+			enemies.add(new Enemy2(2, "Gargamel", "Gargamel", data.getEnemy2Location()));
+		}
+		else if(data.getEnemy2().equals("Azman")) {
+			enemies.add(new Enemy1(2, "Azman", "Azman", data.getEnemy2Location()));
+		}
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		map.drawMap(g);
-		enemy.drawPath(g, player.getLocation());
+		enemies.forEach((enemy) -> enemy.drawPath(g, player.getLocation()));
 		map.drawGrid(g);
-		enemy.drawCharacter(g);
+		enemies.forEach((enemy) -> enemy.drawCharacter(g));
 		player.drawCharacter(g);
 		
 		
@@ -80,7 +98,7 @@ public class PlayState extends State{
 	    		isPlayerMoved = player.run();
 	    		
 	    		if(isPlayerMoved) {
-	    			enemy.run(player.getLocation());
+	    			enemies.forEach((enemy) -> enemy.run(player.getLocation(), player));
 	    		}
 	    		
 	    		try {

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import game.Location;
+import game.Score;
 
 public abstract class Player extends Character{
 
@@ -21,7 +22,7 @@ public abstract class Player extends Character{
 		IDLE
 	}
 	
-	private int score;
+	private Score score;
 	
 	
 	Action upAction, downAction, leftAction, rightAction;
@@ -31,7 +32,7 @@ public abstract class Player extends Character{
 	
 	public Player(int playerID, String playerName, String playerType, int score, Location location, JPanel panel) {
 		super(playerID, playerName, playerType, location);
-		this.score = score;
+		this.score = new Score(score);
 		this.panel = panel;
 		moveState = MoveStates.IDLE;
 		

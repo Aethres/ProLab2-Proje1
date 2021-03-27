@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
@@ -13,8 +15,9 @@ public class GetData {
 	
 	
 	private int map[][];
-	private String enemies[];
-	private BufferedImage enemy1, enemy2, player1, player2, goal;
+	private String enemies[], enemy1, enemy2;
+	private String enemy1Location, enemy2Location;
+	private BufferedImage enemy1Image, enemy2Image, player1, player2, goal, mushroomImage, goldImage;
 	
 	
 	public GetData() {
@@ -22,17 +25,42 @@ public class GetData {
 		loadImages();
 		
 		
+		Pattern pattern = Pattern.compile("(?<=Karakter\\:)(.*?)(?=\\,)");
+		Matcher matcher = pattern.matcher(enemies[0]);
+		while (matcher.find()) {
+			enemy1 = matcher.group(1);
+			System.out.println("Found value: " + enemy1 );
+		}
+		matcher = pattern.matcher(enemies[1]);
+		while (matcher.find()) {
+			enemy2 = matcher.group(1);
+			System.out.println("Found value: " + enemy2 );
+		}
+		pattern = Pattern.compile("(?<=Kapi\\:)(.{1})");
+		matcher = pattern.matcher(enemies[0]);
+		while (matcher.find()) {
+			enemy1Location = matcher.group(1);
+			System.out.println("Found value: " + enemy1Location );
+		}
+		matcher = pattern.matcher(enemies[1]);
+		while (matcher.find()) {
+			enemy2Location = matcher.group(1);
+			System.out.println("Found value: " + enemy2Location );
+		}
+		
 	}
 	
 	public void loadImages() {
 		String filePath = new File("").getAbsolutePath();
         try 
         {
-            enemy1 = ImageIO.read(new File(filePath + "\\Resources\\enemy1.png"));
-            enemy2 = ImageIO.read(new File(filePath + "\\Resources\\enemy2.png"));
+            enemy1Image = ImageIO.read(new File(filePath + "\\Resources\\enemy1.png"));
+            enemy2Image = ImageIO.read(new File(filePath + "\\Resources\\enemy2.png"));
             player1 = ImageIO.read(new File(filePath + "\\Resources\\player1.png"));
             player2 = ImageIO.read(new File(filePath + "\\Resources\\player2.png"));
             goal = ImageIO.read(new File(filePath + "\\Resources\\goal.png"));
+            goldImage = ImageIO.read(new File(filePath + "\\Resources\\gold.png"));
+            mushroomImage = ImageIO.read(new File(filePath + "\\Resources\\mushroom.png"));
         } 
         catch (IOException e) 
         {
@@ -49,6 +77,7 @@ public class GetData {
 		
 		String filePath = new File("").getAbsolutePath();
         File file = new File(filePath + "\\Resources\\harita.txt");
+        
         
         try(Scanner scanner = new Scanner(file)){
         	enemies[0] = scanner.nextLine();
@@ -75,12 +104,12 @@ public class GetData {
 		return enemies;
 	}
 
-	public BufferedImage getEnemy1() {
-		return enemy1;
+	public BufferedImage getEnemy1Image() {
+		return enemy1Image;
 	}
 
-	public BufferedImage getEnemy2() {
-		return enemy2;
+	public BufferedImage getEnemy2Image() {
+		return enemy2Image;
 	}
 
 	public BufferedImage getPlayer1() {
@@ -91,8 +120,56 @@ public class GetData {
 		return player2;
 	}
 
+	public String getEnemy1Location() {
+		return enemy1Location;
+	}
+
+	public void setEnemy1Location(String enemy1Location) {
+		this.enemy1Location = enemy1Location;
+	}
+
+	public String getEnemy2Location() {
+		return enemy2Location;
+	}
+
+	public void setEnemy2Location(String enemy2Location) {
+		this.enemy2Location = enemy2Location;
+	}
+
 	public BufferedImage getGoal() {
 		return goal;
+	}
+
+	public String getEnemy1() {
+		return enemy1;
+	}
+
+	public void setEnemy1(String enemy1) {
+		this.enemy1 = enemy1;
+	}
+
+	public String getEnemy2() {
+		return enemy2;
+	}
+
+	public void setEnemy2(String enemy2) {
+		this.enemy2 = enemy2;
+	}
+
+	public BufferedImage getMushroomImage() {
+		return mushroomImage;
+	}
+
+	public void setMushroomImage(BufferedImage mushroomImage) {
+		this.mushroomImage = mushroomImage;
+	}
+
+	public BufferedImage getGoldImage() {
+		return goldImage;
+	}
+
+	public void setGoldImage(BufferedImage goldImage) {
+		this.goldImage = goldImage;
 	}
 	
 	

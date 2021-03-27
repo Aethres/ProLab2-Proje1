@@ -13,7 +13,13 @@ public class Enemy2 extends Enemy{
 
 	public Enemy2(int enemyID, String enemyName, String enemyType, Location location) {
 		super(enemyID, enemyName, enemyType, location);
-		this.characterImage = data.getEnemy2();
+		this.characterImage = data.getEnemy2Image();
+	}
+	
+	public Enemy2(int enemyID, String enemyName, String enemyType, String startLocation) {
+		super(enemyID, enemyName, enemyType, startLocation);
+		this.characterImage = data.getEnemy2Image();
+		
 	}
 	
 	@Override
@@ -98,10 +104,22 @@ public class Enemy2 extends Enemy{
 
 	
 	@Override
-	public void run(Location goal) {
+	public void run(Location goal, Player player) {
 		ArrayList<Moves> path = shortestPath(goal);
+		if (checkPlayer(location, goal)) {
+			returnToStart();
+			return;
+		}
 		move(path.get(0));
+		if (checkPlayer(location, goal)) {
+			returnToStart();
+			return;
+		}
 		move(path.get(0));
+		if (checkPlayer(location, goal)) {
+			returnToStart();
+			return;
+		}
 		
 		
 	}

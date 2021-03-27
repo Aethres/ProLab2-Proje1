@@ -20,6 +20,14 @@ public abstract class Character {
 		this.data = new GetData();
 		map = data.getMap().clone();
 	}
+	
+	public Character(int id, String name, String characterType) {
+		this.id = id;
+		this.name = name;
+		this.characterType = characterType;
+		this.data = new GetData();
+		map = data.getMap().clone();
+	}
 
 	public Character(int id, String name, String characterType, Location location) {
 		this.id = id;

@@ -10,6 +10,12 @@ import game.Map;
 public abstract class Enemy extends Character{
 	
 	String enemyName, enemyType;
+	Location startLocation;
+	
+	static final Location startA = new Location(3, 0);
+	static final Location startB = new Location(10, 0);
+	static final Location startC = new Location(0, 5);
+	static final Location startD = new Location(3, 10);
 	
 	enum Moves{
 		LEFT,
@@ -25,15 +31,40 @@ public abstract class Enemy extends Character{
 		Location location;
 	}
 	
-	public Enemy(int enemyID, String enemyName, String enemyType, Location location) {
-		super(enemyID, enemyName, enemyType, location);
-		// TODO Auto-generated constructor stub
+	public Enemy(int enemyID, String enemyName, String enemyType, String startLocation) {
+		super(enemyID, enemyName, enemyType);
+		
+		if (startLocation.equals("A")) {
+			this.startLocation = startA;
+		}
+		else if (startLocation.equals("B")) {
+			this.startLocation = startB;
+		}
+		else if (startLocation.equals("C")) {
+			this.startLocation = startC;
+		}
+		else if (startLocation.equals("D")) {
+			this.startLocation = startD;
+		}
+		
+		location = this.startLocation.cloneLocation();
 	}
 	
-	public void run(Location goal) {
+	public Enemy(int enemyID, String enemyName, String enemyType, Location location) {
+		super(enemyID, enemyName, enemyType, location);
+	}
+	
+	public void run(Location goal,Player player) {
 		ArrayList<Moves> path = shortestPath(goal);
+		if (checkPlayer(location, goal)) {
+			returnToStart();
+			return;
+		}
 		move(path.get(0));
-		
+		if (checkPlayer(location, goal)) {
+			returnToStart();
+			return;
+		}
 		
 	}
 	
@@ -276,6 +307,11 @@ public abstract class Enemy extends Character{
 		}
 		
 		return nearNodes;
+	}
+	
+	public void returnToStart() {
+		location.setLocation(startLocation.getX(), startLocation.getY());
+		System.out.println("x: " + location.getX() + "y: " + location.getY());
 	}
 
 }

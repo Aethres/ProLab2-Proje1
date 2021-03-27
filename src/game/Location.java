@@ -36,6 +36,14 @@ public class Location {
 		this.y = y;
 	}
 	
+	public void setLocation(Location location) {
+		this.x = location.getX();
+		this.y = location.getY();
+	}
+	
+	public Location cloneLocation() {
+		return new Location(x, y);
+	}
 	
 	
 }

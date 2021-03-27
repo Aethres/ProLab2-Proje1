@@ -12,6 +12,9 @@ import game.Map;
 public abstract class Item {
 
 	int score;
+	double DisappearTime;
+	double AppearTime;
+	double startTime;
 	BufferedImage itemImage;
 	Location location;
 	GetData data;
@@ -28,8 +31,27 @@ public abstract class Item {
 	}
 	
 	public void drawItem(Graphics g) {
+		g.drawImage(itemImage, location.getX() * Map.TILE_SIZE, (1 + location.getY())* Map.TILE_SIZE - itemImage.getHeight(), itemImage.getWidth(), itemImage.getHeight(), null);
 		
-		//g.drawImage(itemImage, location.getX() * Map.TILE_SIZE, location.getY()* Map.TILE_SIZE - characterImage.getHeight(), characterImage.getWidth(), characterImage.getHeight(), null);
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 	
+	public boolean checkCollasion() {
+		if(player.getLocation().isEqual(location)) {
+			addScore();
+			return true;
+		}
+		return false;
+	}
+	
+	public void addScore() {
+		player.getScore().addScore(score);
+	}
 }

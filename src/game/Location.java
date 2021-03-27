@@ -45,5 +45,11 @@ public class Location {
 		return new Location(x, y);
 	}
 	
+	public boolean isEqual(Location location) {
+		if(y == location.getY() && x == location.getX())
+			return true;
+		
+		return false;
+	}
 	
 }

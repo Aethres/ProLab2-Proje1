@@ -32,7 +32,7 @@ public abstract class Player extends Character{
 	
 	public Player(int playerID, String playerName, String playerType, int score, Location location, JPanel panel) {
 		super(playerID, playerName, playerType, location);
-		this.score = new Score(score);
+		this.setScore(new Score(score));
 		this.panel = panel;
 		moveState = MoveStates.IDLE;
 		
@@ -128,6 +128,14 @@ public abstract class Player extends Character{
 		}
 	}
 	
+	public Score getScore() {
+		return score;
+	}
+
+	public void setScore(Score score) {
+		this.score = score;
+	}
+
 	public class upAction extends AbstractAction{
 
 		@Override

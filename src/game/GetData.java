@@ -29,23 +29,23 @@ public class GetData {
 		Matcher matcher = pattern.matcher(enemies[0]);
 		while (matcher.find()) {
 			enemy1 = matcher.group(1);
-			System.out.println("Found value: " + enemy1 );
+			//System.out.println("Found value: " + enemy1 );
 		}
 		matcher = pattern.matcher(enemies[1]);
 		while (matcher.find()) {
 			enemy2 = matcher.group(1);
-			System.out.println("Found value: " + enemy2 );
+			//System.out.println("Found value: " + enemy2 );
 		}
 		pattern = Pattern.compile("(?<=Kapi\\:)(.{1})");
 		matcher = pattern.matcher(enemies[0]);
 		while (matcher.find()) {
 			enemy1Location = matcher.group(1);
-			System.out.println("Found value: " + enemy1Location );
+			//System.out.println("Found value: " + enemy1Location );
 		}
 		matcher = pattern.matcher(enemies[1]);
 		while (matcher.find()) {
 			enemy2Location = matcher.group(1);
-			System.out.println("Found value: " + enemy2Location );
+			//System.out.println("Found value: " + enemy2Location );
 		}
 		
 	}

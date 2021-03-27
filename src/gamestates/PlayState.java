@@ -15,6 +15,7 @@ import characters.Player2;
 import game.GetData;
 import game.Location;
 import game.Map;
+import items.ItemManager;
 
 public class PlayState extends State{
 
@@ -23,6 +24,7 @@ public class PlayState extends State{
 	Player player;
 	String playerType;
 	ArrayList<Enemy> enemies;
+	ItemManager itemManager;
 	boolean isPlayerMoved;
 	
 	
@@ -44,6 +46,8 @@ public class PlayState extends State{
 		else if(playerType == "player2")
 			this.player = new Player2(1, "ali", "player2", 20, new Location(6,5), this);
 		
+
+		itemManager = new ItemManager(player);
 		
 		enemies = new ArrayList<Enemy>(0);
 		generateEnemies();
@@ -79,6 +83,8 @@ public class PlayState extends State{
 		map.drawGrid(g);
 		enemies.forEach((enemy) -> enemy.drawCharacter(g));
 		player.drawCharacter(g);
+		itemManager.drawItems(g);
+		//player.getScore().drawScore();
 		
 		
 		
@@ -100,6 +106,8 @@ public class PlayState extends State{
 	    		if(isPlayerMoved) {
 	    			enemies.forEach((enemy) -> enemy.run(player.getLocation(), player));
 	    		}
+	    		
+	    		itemManager.run();
 	    		
 	    		try {
 					thread.sleep(15);

@@ -311,7 +311,7 @@ public abstract class Enemy extends Character{
 	
 	public void returnToStart() {
 		location.setLocation(startLocation.getX(), startLocation.getY());
-		System.out.println("x: " + location.getX() + "y: " + location.getY());
+		//System.out.println("x: " + location.getX() + "y: " + location.getY());
 	}
 
 }

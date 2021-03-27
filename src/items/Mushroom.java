@@ -12,6 +12,7 @@ public class Mushroom extends Item{
 	public Mushroom(Player player, Location location) {
 		super(player, location);
 		itemImage = data.getMushroomImage();
+		score = 50;
 	}
 	
 	

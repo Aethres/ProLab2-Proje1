@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import characters.Player.MoveStates;
 import game.Location;
+import items.ItemManager;
 
 public class Player1 extends Player{
 

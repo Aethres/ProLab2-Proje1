@@ -24,6 +24,10 @@ public class MenuState extends State implements ActionListener{
 		super(frame);
 		data = new GetData();
         playerSelection();
+        
+        frame.pack();
+		setSize(800, 700);
+		frame.setSize(880, 700);
 	}
 	
 	private void playerSelection() {

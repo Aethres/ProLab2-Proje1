@@ -13,6 +13,7 @@ import characters.Player;
 import characters.Player1;
 import characters.Player2;
 import game.GetData;
+import game.Goal;
 import game.Location;
 import game.Map;
 import items.ItemManager;
@@ -26,11 +27,14 @@ public class PlayState extends State{
 	ArrayList<Enemy> enemies;
 	ItemManager itemManager;
 	boolean isPlayerMoved;
-	
+	boolean gameEnded;
+	Goal goal;
 	
 	public PlayState(JFrame frame, String playerType) {
 		super(frame);
 		isPlayerMoved = false;
+		gameEnded = false;
+		goal = new Goal();
 		setSize(800, 660);
 		
 		
@@ -38,16 +42,19 @@ public class PlayState extends State{
 		map = new Map(data.getMap(), this);
 		
 		frame.pack();
-		setSize(800, 660);
-		frame.setSize(800, 700);
+		setSize(800, 700);
+		frame.setSize(880, 700);
+		
 		
 		if(playerType == "player1")
 			this.player = new Player1(1, "ali", "player1", 20, new Location(6,5), this);
 		else if(playerType == "player2")
 			this.player = new Player2(1, "ali", "player2", 20, new Location(6,5), this);
 		
-
 		itemManager = new ItemManager(player);
+		
+		player.setItemManager(itemManager);
+		
 		
 		enemies = new ArrayList<Enemy>(0);
 		generateEnemies();
@@ -82,13 +89,30 @@ public class PlayState extends State{
 		enemies.forEach((enemy) -> enemy.drawPath(g, player.getLocation()));
 		map.drawGrid(g);
 		enemies.forEach((enemy) -> enemy.drawCharacter(g));
+		goal.draw(g);
 		player.drawCharacter(g);
 		itemManager.drawItems(g);
-		//player.getScore().drawScore();
+		player.getScore().drawScore(g);
 		
 		
 		
 		
+	}
+	
+	private void gameStatus() {
+		int score = player.getScore().getScore();
+		if(score <= 0)
+			gameEnded = true;
+		
+		if(player.getLocation().isEqual(goal.getLocation()))
+			gameEnded = true;
+		
+		
+	}
+	
+	public void endGame() {
+		frame.add(new GameEndState(frame, player.getScore().getScore()));
+		frame.remove(this);
 	}
 	
 	Thread thread = new Thread(new Runnable() {
@@ -96,7 +120,7 @@ public class PlayState extends State{
 	    public void run() {
 	    	while(true) {
 	    		try {
-					thread.sleep(15);
+					thread.sleep(30);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -109,14 +133,15 @@ public class PlayState extends State{
 	    		
 	    		itemManager.run();
 	    		
-	    		try {
-					thread.sleep(15);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	    		gameStatus();
+	    		
 	    			
 	    		repaint();
+	    		
+	    		if(gameEnded) {
+	    			endGame();
+	    			return;
+	    		}
 	    		
 	    	}
 	    }

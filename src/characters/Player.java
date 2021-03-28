@@ -11,6 +11,7 @@ import javax.swing.KeyStroke;
 
 import game.Location;
 import game.Score;
+import items.ItemManager;
 
 public abstract class Player extends Character{
 
@@ -28,10 +29,13 @@ public abstract class Player extends Character{
 	Action upAction, downAction, leftAction, rightAction;
 	JPanel panel;
 	
+	ItemManager itemManager;
+	
 	MoveStates moveState;
 	
 	public Player(int playerID, String playerName, String playerType, int score, Location location, JPanel panel) {
 		super(playerID, playerName, playerType, location);
+		this.itemManager = itemManager;
 		this.setScore(new Score(score));
 		this.panel = panel;
 		moveState = MoveStates.IDLE;
@@ -97,6 +101,7 @@ public abstract class Player extends Character{
 				break;
 		}
 		
+		itemManager.checkCollasion();
 		
 	}
 	
@@ -134,6 +139,14 @@ public abstract class Player extends Character{
 
 	public void setScore(Score score) {
 		this.score = score;
+	}
+
+	public ItemManager getItemManager() {
+		return itemManager;
+	}
+
+	public void setItemManager(ItemManager itemManager) {
+		this.itemManager = itemManager;
 	}
 
 	public class upAction extends AbstractAction{

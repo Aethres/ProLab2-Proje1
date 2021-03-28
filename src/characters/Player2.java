@@ -3,6 +3,7 @@ package characters;
 import javax.swing.JPanel;
 
 import game.Location;
+import items.ItemManager;
 
 public class Player2 extends Player {
 

@@ -14,12 +14,15 @@ public class Enemy2 extends Enemy{
 	public Enemy2(int enemyID, String enemyName, String enemyType, Location location) {
 		super(enemyID, enemyName, enemyType, location);
 		this.characterImage = data.getEnemy2Image();
+		score = 15;
+
 	}
 	
 	public Enemy2(int enemyID, String enemyName, String enemyType, String startLocation) {
 		super(enemyID, enemyName, enemyType, startLocation);
 		this.characterImage = data.getEnemy2Image();
-		
+		score = 15;
+
 	}
 	
 	@Override
@@ -108,16 +111,19 @@ public class Enemy2 extends Enemy{
 		ArrayList<Moves> path = shortestPath(goal);
 		if (checkPlayer(location, goal)) {
 			returnToStart();
+			player.getScore().subtractScore(score);
 			return;
 		}
 		move(path.get(0));
 		if (checkPlayer(location, goal)) {
 			returnToStart();
+			player.getScore().subtractScore(score);
 			return;
 		}
 		move(path.get(0));
 		if (checkPlayer(location, goal)) {
 			returnToStart();
+			player.getScore().subtractScore(score);
 			return;
 		}
 		

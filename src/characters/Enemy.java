@@ -11,6 +11,7 @@ public abstract class Enemy extends Character{
 	
 	String enemyName, enemyType;
 	Location startLocation;
+	int score;
 	
 	static final Location startA = new Location(3, 0);
 	static final Location startB = new Location(10, 0);
@@ -58,11 +59,13 @@ public abstract class Enemy extends Character{
 		ArrayList<Moves> path = shortestPath(goal);
 		if (checkPlayer(location, goal)) {
 			returnToStart();
+			player.getScore().subtractScore(score);
 			return;
 		}
 		move(path.get(0));
 		if (checkPlayer(location, goal)) {
 			returnToStart();
+			player.getScore().subtractScore(score);
 			return;
 		}
 		

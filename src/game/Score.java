@@ -1,5 +1,9 @@
 package game;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+
 public class Score {
 
 	private int score;
@@ -28,8 +32,9 @@ public class Score {
 		return score;
 	}
 	
-	public void drawScore() {
-		
-		System.out.println(score);
+	public void drawScore(Graphics g) {
+		g.setColor(new Color(55, 55, 55));
+		//g.setFont(new Font("TimesRoman", Font.PLAIN, Map.TILE_SIZE/2));
+		g.drawString(Integer.toString(score), Map.TILE_SIZE * 13 + 3, 25);
 	}
 }

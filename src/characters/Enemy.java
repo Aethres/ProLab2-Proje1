@@ -189,7 +189,8 @@ public abstract class Enemy extends Character{
 		//nodes[location.getY()][location.getX()].distance = 0;
 		
 		//int h = 0;
-		while(true) {
+		boolean changeHappened = true;
+		while(changeHappened && !nodes[goal.getY()][goal.getX()].isVisited) {
 			
 			ArrayList<Node> nearNodes = getNearNodes(map, currentNode, nodes, goal);
 			/*for (int i = 0; i < nearNodes.size(); i++) {
@@ -210,7 +211,7 @@ public abstract class Enemy extends Character{
 			}
 			currentNode.isVisited = true;
 			int tmp = -1;
-			boolean changeHappened = false;
+			changeHappened = false;
 			
 			for (int i = 0; i < nodes.length; i++) {
 				for (int j = 0; j < nodes[0].length; j++) {
@@ -222,9 +223,7 @@ public abstract class Enemy extends Character{
 					}
 				}
 			}
-			if (changeHappened == false) {
-				break;
-			}
+			
 		}
 		
 		//System.out.println(nodes[goal.getY()][goal.getX()].moveList.toString());

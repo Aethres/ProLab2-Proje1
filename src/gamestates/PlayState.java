@@ -1,5 +1,6 @@
 package gamestates;
 
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -62,13 +63,11 @@ public class PlayState extends State{
 		
 		
 		
-		
 	}
 	
 	public void generateEnemies() {
 		
 		if (data.getEnemy1().equals("Gargamel")) {
-			System.out.println("sd");
 			enemies.add(new Enemy2(1, "Gargamel", "Gargamel", data.getEnemy1Location()));
 		}
 		else if(data.getEnemy1().equals("Azman")) {
@@ -120,12 +119,13 @@ public class PlayState extends State{
 	    public void run() {
 	    	while(true) {
 	    		try {
-					thread.sleep(30);
+					thread.sleep(15);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 	    		isPlayerMoved = player.run();
+	    		
 	    		
 	    		if(isPlayerMoved) {
 	    			enemies.forEach((enemy) -> enemy.run(player.getLocation(), player));

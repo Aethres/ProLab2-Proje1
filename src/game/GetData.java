@@ -24,6 +24,8 @@ public class GetData {
 		loadText();
 		loadImages();
 		
+		enemy1Location = "A";
+		enemy2Location = "A";
 		
 		Pattern pattern = Pattern.compile("(?<=Karakter\\:)(.*?)(?=\\,)");
 		Matcher matcher = pattern.matcher(enemies[0]);
@@ -36,7 +38,7 @@ public class GetData {
 			enemy2 = matcher.group(1);
 			//System.out.println("Found value: " + enemy2 );
 		}
-		pattern = Pattern.compile("(?<=Kapi\\:)(.{1})");
+		pattern = Pattern.compile("(?<=Kapi\\:)([A-D]{1})");
 		matcher = pattern.matcher(enemies[0]);
 		while (matcher.find()) {
 			enemy1Location = matcher.group(1);

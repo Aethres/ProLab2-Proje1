@@ -34,7 +34,6 @@ public class Score {
 	
 	public void drawScore(Graphics g) {
 		g.setColor(new Color(55, 55, 55));
-		//g.setFont(new Font("TimesRoman", Font.PLAIN, Map.TILE_SIZE/2));
-		g.drawString(Integer.toString(score), Map.TILE_SIZE * 13 + 3, 25);
+		g.drawString("Score: " + Integer.toString(score), Map.TILE_SIZE * 13 + 3, 25);
 	}
 }
